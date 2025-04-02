@@ -31,19 +31,16 @@ class ResNet18_pop(nn.Module):
         self.d = d
         # cifar 10
         if self.num_classes == 10:
-            # self.num_others = int(self.c + self.num_classes)
             self.num_total = self.num_classes + int(self.c)
             model = ResNet18_32x32(num_classes=self.num_total)
         # cifar 100
         elif self.num_classes == 100:
-            # self.num_others = int(self.c + self.num_classes)
             self.num_total = self.num_classes + int(self.c)
             model = ResNet18_32x32(num_classes=self.num_total)
         else:
-            self.num_others = int(self.c * self.num_classes)
-            self.num_total = self.num_classes + self.num_others
+            self.num_total = self.num_classes + int(self.c)
             model = ResNet18_224x224(num_classes=self.num_total)
-            # print(self.c, self.d, "!!!!")
+
 
         self.num_ftrs = 512 * 1 * 1       # Used for resnet18
         self.haf_gamma = 512
@@ -101,7 +98,7 @@ class ResNet18_pop(nn.Module):
         cls = self.classifier_3
         return cls.weight.cpu().detach().numpy()
 
-    def get_distance(self, distance_path, class_str_labels=None):
+    def get_distance1(self, distance_path, class_str_labels=None):
 
         distance_matrix = np.load(distance_path)
         
@@ -156,7 +153,28 @@ class ResNet18_pop(nn.Module):
                                                 self.num_total,
                                                 self.haf_gamma)
 
-        # haf_cls_weights = np.random.uniform(-1, 1, haf_cls_weights.shape)
-        # haf_cls_weights = gram_schmidt(haf_cls_weights.T).T
         return haf_cls_weights
     
+    def get_distance(self, distance_path, class_str_labels=None):
+        distance_matrix = np.load(distance_path)
+        
+        with_others = np.zeros((self.num_total, self.num_total))
+    
+        for i in range(self.num_total):
+            for j in range(self.num_total):
+                if i < self.num_classes and j < self.num_classes:
+                    with_others[i, j] = distance_matrix[i, j]
+                else:
+                    if i == j:
+                        with_others[i, j] = 0
+                    else:
+                        with_others[i, j] = self.d
+    
+        distance_matrix = with_others
+    
+        haf_cls_weights, _, _, mapping_function = \
+            distance_matrix_to_haf_cls_weights(distance_matrix,
+                                            class_str_labels,
+                                            self.num_total,
+                                            self.haf_gamma)
+        return haf_cls_weights

@@ -204,18 +204,18 @@ DATA_INFO = {
                 }
             },
             'far': {
-                'datasets': ['inaturalist', 'textures', 'openimage_o'],
+                'datasets': ['inaturalist', 'place365', 'openimage_o'],
                 'inaturalist': {
                     'data_dir':
                     'images_largescale/',
                     'imglist_path':
                     'benchmark_imglist/imagenet200/test_inaturalist.txt'
                 },
-                'textures': {
+                'place365': {
                     'data_dir':
                     'images_classic/',
                     'imglist_path':
-                    'benchmark_imglist/imagenet200/test_textures.txt'
+                    'benchmark_imglist/cifar100/test_places365.txt'
                 },
                 'openimage_o': {
                     'data_dir':

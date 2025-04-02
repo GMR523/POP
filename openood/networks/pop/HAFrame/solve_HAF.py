@@ -1,24 +1,9 @@
 import numpy as np
 from .distance import load_distance_matrix
 
-
-# linear mapping
-def map_hdistance_to_cosine_similarity_linear(**kwargs):
-    """
-        hdistance: K-by-K matrix of pairwise hierarchical distance
-    """
-    hdistance, min_similarity = kwargs['hdistance'], kwargs['min_similarity']
-    assert min_similarity >= -1
-    d_max = np.max(hdistance)
-    max_similarity = 1.0
-    similarity_range = max_similarity-min_similarity
-    s = -(similarity_range*hdistance/d_max - max_similarity)
-    return s
-
-# version 3 
 def map_hdistance_to_cosine_similarity_polynomial_decay(**kwargs):
     hdistance, _, _ = kwargs['hdistance'], kwargs['gamma'], kwargs['min_similarity']
-    s = 1/(hdistance+1)
+    s = 1 / (hdistance+1)
     return s
 
 # matrix factorization solver
