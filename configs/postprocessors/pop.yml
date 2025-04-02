@@ -1,0 +1,7 @@
+postprocessor:
+  name: pop
+  APS_mode: True
+  postprocessor_args:
+    dim: 256
+  postprocessor_sweep:
+    dim_list: [256]

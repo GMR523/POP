@@ -35,7 +35,7 @@ from .ish_trainer import ISHTrainer
 from .palm_trainer import PALMTrainer
 from .t2fnorm_trainer import T2FNormTrainer
 from .reweightood_trainer import ReweightOODTrainer
-
+from .pop_trainer import POPTrainer
 
 def get_trainer(net, train_loader: DataLoader, val_loader: DataLoader,
                 config: Config):
@@ -72,6 +72,7 @@ def get_trainer(net, train_loader: DataLoader, val_loader: DataLoader,
             'palm': PALMTrainer,
             't2fnorm': T2FNormTrainer,
             'reweightood': ReweightOODTrainer,
+            'pop': POPTrainer
         }
         if config.trainer.name in ['cider', 'npos']:
             return trainers[config.trainer.name](net, train_loader, val_loader,

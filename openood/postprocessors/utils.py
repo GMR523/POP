@@ -42,7 +42,7 @@ from .vim_postprocessor import VIMPostprocessor
 from .rts_postprocessor import RTSPostprocessor
 from .gen_postprocessor import GENPostprocessor
 from .relation_postprocessor import RelationPostprocessor
-
+from .pop_postprocessor import POPPostprocessor
 
 def get_postprocessor(config: Config):
     postprocessors = {
@@ -88,6 +88,7 @@ def get_postprocessor(config: Config):
         'gen': GENPostprocessor,
         'relation': RelationPostprocessor,
         't2fnorm': T2FNormPostprocessor,
+        'pop': POPPostprocessor,
     }
 
     return postprocessors[config.postprocessor.name](config)

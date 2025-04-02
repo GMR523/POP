@@ -37,7 +37,7 @@ from .vit_b_16 import ViT_B_16
 from .wrn import WideResNet
 from .rts_net import RTSNet
 from .palm_net import PALMNet
-
+from .pop.resnet18_pop import ResNet18_pop
 
 def get_network(network_config):
 
@@ -45,6 +45,11 @@ def get_network(network_config):
 
     if network_config.name == 'resnet18_32x32':
         net = ResNet18_32x32(num_classes=num_classes)
+
+    elif network_config.name == 'resnet18_pop':
+        c = network_config.c
+        d = network_config.d
+        net = ResNet18_pop(num_classes=num_classes, c=c, d=d)
 
     elif network_config.name == 'resnet18_256x256':
         net = ResNet18_256x256(num_classes=num_classes)

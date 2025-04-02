@@ -13,3 +13,4 @@ from .wrn import WideResNet
 from .swin_t import Swin_T
 from .vit_b_16 import ViT_B_16
 from .regnet_y_16gf import RegNet_Y_16GF
+from .pop.resnet18_pop import ResNet18_pop
